@@ -7,6 +7,9 @@ import (
 	"net/url"
 )
 
+// GetHTTPResponseFromCluster will return a http.Response from one of the Mesos master nodes.
+// In a cluster the master nodes can be online or offline.
+// With GetHTTPResponseFromCluster you will recieve a response from one of the nodes.
 func (c *Client) GetHTTPResponseFromCluster(f func(url.URL) url.URL) (*http.Response, error) {
 	for _, instance := range c.Master {
 		u := f(*instance)
@@ -21,11 +24,14 @@ func (c *Client) GetHTTPResponseFromCluster(f func(url.URL) url.URL) (*http.Resp
 	return nil, errors.New("No master online.")
 }
 
+// GetHTTPResponseFromLeader will return a http.Response from the determined leader
+// of the master nodes.
 func (c *Client) GetHTTPResponseFromLeader(f func(Pid) url.URL) (*http.Response, error) {
 	u := f(*c.Leader)
 	return c.GetHTTPResponse(&u)
 }
 
+// GetHTTPResponse will return a http.Response from a URL
 func (c *Client) GetHTTPResponse(u *url.URL) (*http.Response, error) {
 	resp, err := http.Get(u.String())
 
@@ -36,6 +42,7 @@ func (c *Client) GetHTTPResponse(u *url.URL) (*http.Response, error) {
 	return resp, nil
 }
 
+// GetBodyOfHTTPResponse will return the request body of the requested url u.
 func (c *Client) GetBodyOfHTTPResponse(u *url.URL) ([]byte, error) {
 	resp, err := c.GetHTTPResponse(u)
 	if err != nil {

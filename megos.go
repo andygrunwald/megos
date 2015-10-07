@@ -6,6 +6,9 @@ import (
 	"strings"
 )
 
+// TODO Support new mesos version
+// @link http://mesos.apache.org/documentation/latest/upgrades/
+
 // Client manages the communication with the Mesos cluster.
 type Client struct {
 	// Master is the list of Mesos master nodes in the cluster.

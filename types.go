@@ -1,4 +1,4 @@
-package mesos
+package megos
 
 type State struct {
 	// Missing fields...

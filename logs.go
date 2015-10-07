@@ -1,4 +1,4 @@
-package mesos
+package megos
 
 import (
 	"net/url"

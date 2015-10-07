@@ -1,4 +1,4 @@
-package mesos
+package megos
 
 import (
 	"encoding/json"

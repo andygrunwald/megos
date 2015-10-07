@@ -1,5 +1,6 @@
 package megos
 
+// State represents the JSON from the state.json of a mesos node
 type State struct {
 	// Missing fields...
 	// TODO "attributes": {},
@@ -36,6 +37,7 @@ type State struct {
 	Version                string      `json:"version"`
 }
 
+// Flags represents the flags of a mesos state
 type Flags struct {
 	AllocationInterval          string `json:"allocation_interval"`
 	Authenticate                string `json:"authenticate"`
@@ -100,6 +102,7 @@ type Flags struct {
 	ZKSessionTimeout            string `json:"zk_session_timeout"`
 }
 
+// Framework represent a single framework of a mesos node
 type Framework struct {
 	// Missing fields
 	// TODO: "offers": [],
@@ -123,6 +126,7 @@ type Framework struct {
 	WebuiURL           string     `json:"webui_url"`
 }
 
+// Task represent a single Mesos task
 type Task struct {
 	// Missing fields
 	// TODO: "labels": [],
@@ -136,6 +140,7 @@ type Task struct {
 	Statuses    []TaskStatus `json:"statuses"`
 }
 
+// Resources represents a resource type for a task
 type Resources struct {
 	CPUs  float32 `json:"cpus"`
 	Disk  int     `json:"disk"`
@@ -143,11 +148,13 @@ type Resources struct {
 	Ports string  `json:"ports"`
 }
 
+// TaskStatus represents the status of a single task
 type TaskStatus struct {
 	State     string  `json:"state"`
 	Timestamp float32 `json:"timestamp"`
 }
 
+// Slave represents a single mesos slave node
 type Slave struct {
 	// Missing fields
 	// TODO "attributes": {},
@@ -159,6 +166,7 @@ type Slave struct {
 	Resources      Resources `json:"resources"`
 }
 
+// Executor represents a single executor of a framework
 type Executor struct {
 	// Missing fields
 	// TODO "queued_tasks": [],

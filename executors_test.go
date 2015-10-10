@@ -31,6 +31,6 @@ func TestGetExecutorByID_WithoutExecutor(t *testing.T) {
 		t.Errorf("Executor is not nil. Expected nil, got %+v", e)
 	}
 	if err == nil {
-		t.Errorf("err is not nil. Expected a string, got %s", err)
+		t.Errorf("err is nil. Expected a string, got %s", err)
 	}
 }

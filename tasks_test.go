@@ -31,6 +31,6 @@ func TestGetTaskByID_WithoutTask(t *testing.T) {
 		t.Errorf("Task is not nil. Expected nil, got %+v", ta)
 	}
 	if err == nil {
-		t.Errorf("err is not nil. Expected a string, got %s", err)
+		t.Errorf("err is nil. Expected a string, got %s", err)
 	}
 }

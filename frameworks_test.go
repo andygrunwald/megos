@@ -31,6 +31,6 @@ func TestGetFrameworkByPrefix_WithoutFramework(t *testing.T) {
 		t.Errorf("Framework is not nil. Expected nil, got %+v", f)
 	}
 	if err == nil {
-		t.Errorf("err is not nil. Expected a string, got %s", err)
+		t.Errorf("err is nil. Expected a string, got %s", err)
 	}
 }

@@ -1,6 +1,7 @@
 # megos
 
 [![GoDoc](https://godoc.org/github.com/andygrunwald/megos?status.svg)](https://godoc.org/github.com/andygrunwald/megos)
+[![Build Status](https://travis-ci.org/andygrunwald/megos.svg)](https://travis-ci.org/andygrunwald/megos)
 
 [Go(lang)](https://golang.org/) client library for accessing [Apache Mesos](http://mesos.apache.org/) cluster.
 

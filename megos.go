@@ -65,9 +65,14 @@ func (c *Client) ParsePidInformation(pid string) *Pid {
 	firstPart := strings.Split(pid, "@")
 	secondPart := strings.Split(firstPart[1], ":")
 
-	port, err := strconv.Atoi(secondPart[1])
-	// If we got an error during conversion, set the default port
-	if err != nil {
+	var port int
+	var err error
+	if len(secondPart) == 2 {
+		port, err = strconv.Atoi(secondPart[1])
+	}
+
+	// If we got an error during conversion or no port is available, set the default port
+	if err != nil || len(secondPart) < 2 {
 		port = 5050
 	}
 

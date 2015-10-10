@@ -19,10 +19,16 @@ It is go gettable
 
 Please have a look at the [GoDoc documentation](https://godoc.org/github.com/andygrunwald/megos) for a detailed API description.
 
-## Examples
+## Examples / use cases
 
-Further a few examples how the API can be used.
-A few more examples are available in the [GoDoc examples section](https://godoc.org/github.com/andygrunwald/megos#pkg-examples).
+A (small) list of usecases how this library can be used:
+
+* Determine the leader of a Mesos cluster
+* Get a list of all completed Mesos tasks
+* Get the stdout and stderr of a failed mesos task
+* Get the statistics and push it to a different backend
+
+Further more a few examples how the API can be used and the code looks like.
 
 ### TODO
 
@@ -38,6 +44,26 @@ See [Upgrading Mesos - Upgrading from 0.24.x to 0.25.x](http://mesos.apache.org/
 
 If you are running a Mesos cluster >= 0.25.x and you can make this library working with it, please start a Pull Request or open an issue.
 We are happy to get this support into.
+
+## TODO-List
+
+* Provide unit tests
+* Add travis-ci
+* Provide (executable) examples
+* Add doc.go
+
+## Contribution
+
+* You have a question?
+* Don`t know if a feature is supported?
+* Want to implement a new feature, but don`t know how?
+* You like the library and use it for your implementation / use case?
+* You found a bug or incompatibility?
+* Something is not working as expected?
+
+Feel free to open a [new issue](https://github.com/andygrunwald/megos/issues/new).
+I will be happy to answer them and try to help you.
+It might be useful to add as much information as possible into the issue like Mesos version, example URL, (parts) of your code and the expected and current behaviour.
 
 ## License
 

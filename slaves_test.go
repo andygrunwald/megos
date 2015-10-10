@@ -6,8 +6,6 @@ import (
 )
 
 func TestGetSlaveByID_WithSlave(t *testing.T) {
-	setup()
-
 	slaveID := "Slave2"
 	slaves := []Slave{
 		Slave{ID: "Slave1"},
@@ -21,8 +19,6 @@ func TestGetSlaveByID_WithSlave(t *testing.T) {
 }
 
 func TestGetSlaveByID_WithoutSlave(t *testing.T) {
-	setup()
-
 	slaveID := "Slave5"
 	slaves := []Slave{
 		Slave{ID: "Slave1"},

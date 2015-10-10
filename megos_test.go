@@ -2,6 +2,8 @@ package megos
 
 import (
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"net/url"
 	"reflect"
 	"testing"
@@ -10,34 +12,73 @@ import (
 var (
 	// client is the Megos client being tested.
 	client *Client
+
+	// master is a list of (faked) mesos master nodes
+	master []*url.URL
+
+	// mux1 is the HTTP request multiplexer used with the test server.
+	mux1 *http.ServeMux
+
+	// server1 is a test HTTP server used to provide mock API responses.
+	server1 *httptest.Server
+
+	// mux2 is the HTTP request multiplexer used with the test server.
+	mux2 *http.ServeMux
+
+	// server2 is a test HTTP server used to provide mock API responses.
+	server2 *httptest.Server
+
+	// mux3 is the HTTP request multiplexer used with the test server.
+	mux3 *http.ServeMux
+
+	// server3 is a test HTTP server used to provide mock API responses.
+	server3 *httptest.Server
 )
 
+// setup sets up a test HTTP server along with a megos.Client that is configured to talk to that test server.
+// Tests should register handlers on mux which provide mock responses for the http call being tested.
 func setup() {
-	client = NewClient(getSetupMaster())
+	// test server: 1
+	mux1 = http.NewServeMux()
+	server1 = httptest.NewServer(mux1)
+
+	// test server: 2
+	mux2 = http.NewServeMux()
+	server2 = httptest.NewServer(mux2)
+
+	// test server: 3
+	mux3 = http.NewServeMux()
+	server3 = httptest.NewServer(mux3)
+
+	m1, _ := url.Parse(server1.URL)
+	m2, _ := url.Parse(server2.URL)
+	m3, _ := url.Parse(server3.URL)
+	master = []*url.URL{m1, m2, m3}
+
+	client = NewClient(master)
 }
 
-func getSetupMaster() []*url.URL {
-	m1, _ := url.Parse("http://mesos-master1:5050/")
-	m2, _ := url.Parse("http://mesos-master2:5050/")
-	m3, _ := url.Parse("http://mesos-master3:5050/")
-	master := []*url.URL{m1, m2, m3}
-
-	return master
+// teardown closes the test HTTP server.
+func teardown() {
+	server1.Close()
+	server2.Close()
+	server3.Close()
 }
 
 func TestNewClient(t *testing.T) {
 	setup()
+	defer teardown()
+
 	if client == nil {
 		t.Error("Megos client is nil. Expected megos.Client structure")
 	}
 
-	if !reflect.DeepEqual(client.Master, getSetupMaster()) {
+	if !reflect.DeepEqual(client.Master, master) {
 		t.Error("Megos master are not the same as initialized.")
 	}
 }
 
 func TestParsePidInformation_WithPort(t *testing.T) {
-	setup()
 	role := "master"
 	host := "10.1.1.12"
 	port := 5555
@@ -74,7 +115,6 @@ func TestParsePidInformation_WithoutPort(t *testing.T) {
 }
 
 func TestParsePidInformation_String(t *testing.T) {
-	setup()
 	role := "master"
 	host := "10.1.1.12"
 	port := 5555

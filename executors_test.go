@@ -6,8 +6,6 @@ import (
 )
 
 func TestGetExecutorByID_WithExecutor(t *testing.T) {
-	setup()
-
 	executorID := "Executor3"
 	executor := []Executor{
 		Executor{ID: "Executor1", Name: "Test Executor one"},
@@ -21,8 +19,6 @@ func TestGetExecutorByID_WithExecutor(t *testing.T) {
 }
 
 func TestGetExecutorByID_WithoutExecutor(t *testing.T) {
-	setup()
-
 	executorID := "Executor4"
 	executor := []Executor{
 		Executor{ID: "Executor1", Name: "Test Executor one"},

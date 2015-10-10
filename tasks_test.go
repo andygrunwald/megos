@@ -6,8 +6,6 @@ import (
 )
 
 func TestGetTaskByID_WithTask(t *testing.T) {
-	setup()
-
 	taskID := "Task2"
 	tasks := []Task{
 		Task{ID: "Task1", Name: "Test task one"},
@@ -21,8 +19,6 @@ func TestGetTaskByID_WithTask(t *testing.T) {
 }
 
 func TestGetTaskByID_WithoutTask(t *testing.T) {
-	setup()
-
 	taskID := "Task4"
 	tasks := []Task{
 		Task{ID: "Task1", Name: "Test task one"},

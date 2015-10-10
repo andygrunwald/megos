@@ -6,8 +6,6 @@ import (
 )
 
 func TestGetFrameworkByPrefix_WithFramework(t *testing.T) {
-	setup()
-
 	prefix := "Test Framework three"
 	frameworks := []Framework{
 		Framework{ID: "Framework1", Name: "Test Framework one"},
@@ -21,8 +19,6 @@ func TestGetFrameworkByPrefix_WithFramework(t *testing.T) {
 }
 
 func TestGetFrameworkByPrefix_WithoutFramework(t *testing.T) {
-	setup()
-
 	prefix := "test"
 	frameworks := []Framework{
 		Framework{ID: "Framework1", Name: "Test Framework one"},

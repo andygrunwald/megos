@@ -38,6 +38,3 @@ func TestGetExecutorByID_WithoutExecutor(t *testing.T) {
 		t.Errorf("err is not nil. Expected a string, got %s", err)
 	}
 }
-
-// Missing tests:
-// * GetExecutorByID

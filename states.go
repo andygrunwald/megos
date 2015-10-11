@@ -42,6 +42,7 @@ func (c *Client) parseStateResponse(resp *http.Response, err error) (*State, err
 		return nil, err
 	}
 
+	// TODO Mutex
 	c.State = &state
 
 	return c.State, nil

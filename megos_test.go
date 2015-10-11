@@ -144,5 +144,43 @@ func TestParsePidInformation_String(t *testing.T) {
 	}
 }
 
-// Missing tests:
-// * DetermineLeader
+func TestDetermineLeader_NoNodeOnline(t *testing.T) {
+	setup()
+	defer teardown()
+
+	v, _ := url.Parse("http://not-existing.example.org/")
+	client.Master = []*url.URL{v, v, v}
+	p, err := client.DetermineLeader()
+	if p != nil {
+		t.Errorf("Pid is not nil. Expected nil, got %+v", p)
+	}
+
+	if err == nil {
+		t.Error("Error is nil. Expected an error (No master online.).")
+	}
+}
+
+func TestDetermineLeader(t *testing.T) {
+	setup()
+	defer teardown()
+	expected := "master@192.168.1.12:5050"
+
+	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		c := getContentOfFile("tests/master1.state.json")
+		fmt.Fprint(w, string(c))
+	})
+
+	p, err := client.DetermineLeader()
+	if p == nil {
+		t.Error("Pid is nil. Expected not nil")
+	}
+
+	if s := p.String(); s != expected {
+		t.Errorf("Wrong pid. Extected %s, got %s", expected, s)
+	}
+
+	if err != nil {
+		t.Errorf("Error is not nil. Expected nil, got %s", err)
+	}
+}

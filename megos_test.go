@@ -36,6 +36,8 @@ var (
 	server3 *httptest.Server
 )
 
+type values map[string]string
+
 // setup sets up a test HTTP server along with a megos.Client that is configured to talk to that test server.
 // Tests should register handlers on mux which provide mock responses for the http call being tested.
 func setup() {
@@ -70,6 +72,19 @@ func teardown() {
 func testMethod(t *testing.T, r *http.Request, want string) {
 	if got := r.Method; got != want {
 		t.Errorf("Request method: %v, want %v", got, want)
+	}
+}
+
+// testFormValues is a utility method to test the query values given in values
+func testFormValues(t *testing.T, r *http.Request, values values) {
+	want := url.Values{}
+	for k, v := range values {
+		want.Add(k, v)
+	}
+
+	r.ParseForm()
+	if got := r.Form; !reflect.DeepEqual(got, want) {
+		t.Errorf("Request parameters: %v, want %v", got, want)
 	}
 }
 

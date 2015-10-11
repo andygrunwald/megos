@@ -138,5 +138,47 @@ func TestGetHTTPResponseFromCluster(t *testing.T) {
 	}
 }
 
-// Missing tests:
-// * GetHTTPResponseFromLeader
+func TestGetHTTPResponseFromLeader_NoLeader(t *testing.T) {
+	setup()
+	defer teardown()
+
+	testFunc := func(p Pid) url.URL {
+		return url.URL{}
+	}
+	resp, err := client.GetHTTPResponseFromLeader(testFunc)
+	if resp != nil {
+		t.Errorf("Response is not nil. Expected nil, got %+v", resp)
+	}
+
+	if err == nil {
+		t.Error("Error is nil. Expected an error (No leader set.).")
+	}
+}
+
+func TestGetHTTPResponseFromLeader(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		fmt.Fprint(w, getContentOfFile("tests/master1.state.json"))
+	})
+
+	client.Leader = &Pid{}
+	testFunc := func(p Pid) url.URL {
+		u, _ := url.Parse(server1.URL)
+		return *u
+	}
+	resp, err := client.GetHTTPResponseFromLeader(testFunc)
+	if resp == nil {
+		t.Errorf("Response is nil. Expected valid response, got nil")
+	}
+
+	if resp.StatusCode != 200 {
+		t.Errorf("Response status code is not 200. Expected 200, got %d", resp.StatusCode)
+	}
+
+	if err != nil {
+		t.Errorf("Error is not nil. Expected nil, got %s.", err)
+	}
+}

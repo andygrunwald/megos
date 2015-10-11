@@ -2,6 +2,8 @@ package megos
 
 import (
 	"fmt"
+	"net/http"
+	"net/url"
 	"testing"
 )
 
@@ -36,7 +38,49 @@ func TestGetURLForStateFilePid(t *testing.T) {
 	}
 }
 
+func TestGetStateFromCluster_NoNodesOnline(t *testing.T) {
+	setup()
+	defer teardown()
+
+	u, _ := url.Parse("http://not-existing.example.org/")
+	client.Master = []*url.URL{u, u, u}
+	state, err := client.GetStateFromCluster()
+
+	if state != nil {
+		t.Errorf("State is not nil. Expected nil. Got %+v", state)
+	}
+
+	if err == nil {
+		t.Error("Error is nil. Expected an error.")
+	}
+}
+
+func TestGetStateFromCluster(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		c := getContentOfFile("tests/master1.state.json")
+		fmt.Fprint(w, string(c))
+	})
+
+	state, err := client.GetStateFromCluster()
+
+	if state == nil {
+		t.Error("State is nil. Expected valid state struct")
+	}
+
+	// Check if some random samples are matching with dummy content in master1.state.json
+	if state != nil && (state.Cluster != "chronos1" || state.Version != "0.22.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
+		t.Error("Random samples are not matching with test mock data.")
+	}
+
+	if err != nil {
+		t.Errorf("Error is not nil. Expected nil, got %s.", err)
+	}
+}
+
 // Missing tests:
-// * GetStateFromCluster
 // * GetStateFromLeader
 // * GetStateFromPid

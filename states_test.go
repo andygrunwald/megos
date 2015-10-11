@@ -61,7 +61,7 @@ func TestGetStateFromCluster(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		c := getContentOfFile("tests/master1.state.json")
 		fmt.Fprint(w, string(c))
@@ -121,7 +121,7 @@ func TestGetStateFromLeader(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		c := getContentOfFile("tests/master1.state.json")
 		fmt.Fprint(w, string(c))
@@ -175,7 +175,7 @@ func TestGetStateFromPid(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		c := getContentOfFile("tests/master1.state.json")
 		fmt.Fprint(w, string(c))

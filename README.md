@@ -52,12 +52,12 @@ if err != nil {
 
 fmt.Println(leader)
 // Output:
-// 	master@192.168.1.122:5050
+// master@192.168.1.122:5050
 ```
 
 ### Get the version of Mesos
 
-```
+```go
 node1, _ := url.Parse("http://192.168.1.120:5050/")
 node2, _ := url.Parse("http://192.168.1.122:5050/")
 

@@ -38,9 +38,81 @@ A (small) list of usecases how this library can be used:
 
 Further more a few examples how the API can be used and the code looks like.
 
-### TODO
+### Determine the leader node
 
-TODO
+```go
+node1, _ := url.Parse("http://192.168.1.120:5050/")
+node2, _ := url.Parse("http://192.168.1.122:5050/")
+
+mesos := megos.NewClient([]*url.URL{node1, node2})
+leader, err := mesos.DetermineLeader()
+if err != nil {
+	panic(err)
+}
+
+fmt.Println(leader)
+// Output:
+// 	master@192.168.1.122:5050
+```
+
+### Get the version of Mesos
+
+```
+node1, _ := url.Parse("http://192.168.1.120:5050/")
+node2, _ := url.Parse("http://192.168.1.122:5050/")
+
+mesos := megos.NewClient([]*url.URL{node1, node2})
+state, err := mesos.GetStateFromCluster()
+if err != nil {
+	panic(err)
+}
+
+fmt.Printf("Mesos v%s", state.Version)
+// Output:
+// Mesos 0.22.1
+```
+
+### Get stdout and stderr of a task
+
+Get stdout and stderr from a task of the [chronos](https://github.com/mesos/chronos) framework. Error checks are dropped for simplicity.
+
+```go
+node1, _ := url.Parse("http://192.168.1.120:5050/")
+node2, _ := url.Parse("http://192.168.1.122:5050/")
+mesos := megos.NewClient([]*url.URL{node1, node2})
+
+frameworkPrefix := "chronos"
+taskID := "ct:1444578480000:0:example-chronos-task:"
+
+mesos.DetermineLeader()
+state, _ := mesos.GetStateFromLeader()
+
+framework, _ := mesos.GetFrameworkByPrefix(state.Frameworks, frameworkPrefix)
+task, _ := mesos.GetTaskByID(framework.CompletedTasks, taskID)
+slave, _ := mesos.GetSlaveByID(state.Slaves, task.SlaveID)
+
+pid := mesos.ParsePidInformation(slave.PID)
+slaveState, _ := mesos.GetStateFromPid(pid)
+
+framework, _ = mesos.GetFrameworkByPrefix(slaveState.Frameworks, frameworkPrefix)
+executor, _ := mesos.GetExecutorByID(framework.CompletedExecutors, taskID)
+
+stdOut, _ := mesos.GetStdOutOfTask(pid, executor.Directory)
+stdErr, _ := mesos.GetStdErrOfTask(pid, executor.Directory)
+
+fmt.Println(stdOut)
+fmt.Println("================")
+fmt.Println(stdErr)
+// Output:
+// Registered executor on 192.168.1.123
+// Starting task ct:1444578480000:0:example-chronos-task:
+// sh -c 'MY COMMAND'
+// Forked command at 10629
+// ...
+// ================
+// I1011 17:48:00.390614 10602 exec.cpp:132] Version: 0.22.1
+// I1011 17:48:00.532158 10618 exec.cpp:206] Executor registered on slave 20150603-103119-2046951690-5050-24382-S1
+```
 
 ## Version compatibility
 
@@ -55,7 +127,6 @@ We are happy to get this support into.
 
 ## TODO-List
 
-* Provide (executable) examples
 * Add doc.go
 
 ## Other/Similar projects

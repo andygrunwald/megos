@@ -109,7 +109,7 @@ func TestGetHTTPResponseFromCluster(t *testing.T) {
 
 	mux2.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
-		fmt.Fprint(w, getContentOfFile("tests/master1.state.json"))
+		fmt.Fprint(w, "content")
 	})
 
 	i := 0
@@ -161,7 +161,7 @@ func TestGetHTTPResponseFromLeader(t *testing.T) {
 
 	mux1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
-		fmt.Fprint(w, getContentOfFile("tests/master1.state.json"))
+		fmt.Fprint(w, "content")
 	})
 
 	client.Leader = &Pid{}

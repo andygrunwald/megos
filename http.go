@@ -27,6 +27,9 @@ func (c *Client) GetHTTPResponseFromCluster(f func(url.URL) url.URL) (*http.Resp
 // GetHTTPResponseFromLeader will return a http.Response from the determined leader
 // of the master nodes.
 func (c *Client) GetHTTPResponseFromLeader(f func(Pid) url.URL) (*http.Response, error) {
+	if c.Leader == nil {
+		return nil, errors.New("No leader set.")
+	}
 	u := f(*c.Leader)
 	return c.GetHTTPResponse(&u)
 }

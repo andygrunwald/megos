@@ -5,6 +5,13 @@
 
 [Go(lang)](https://golang.org/) client library for accessing [Apache Mesos](http://mesos.apache.org/) cluster.
 
+## Features
+
+* Determine the Mesos leader
+* Get the current state of every mesos node (master or slave)
+* Retrieve stdout and stderr of tasks
+* Covered with unit tests
+
 ## Installation
 
 It is go gettable
@@ -48,10 +55,15 @@ We are happy to get this support into.
 
 ## TODO-List
 
-* Provide unit tests
-* Add travis-ci
 * Provide (executable) examples
 * Add doc.go
+
+## Other/Similar projects
+
+* [boldfield/go-mesos](https://github.com/boldfield/go-mesos): A client for discovering information about a Mesos exposed via HTTP API
+* [antonlindstrom/mesos_stats](https://github.com/antonlindstrom/mesos_stats): Statistics definition for Mesos /monitor/statistics.json
+* [Clever/marathon-stats](https://github.com/Clever/marathon-stats): A simple container which queries marathon and mesos for stats about their current state, and logs these stats to stderr
+* [bolcom/mesos_metrics](https://github.com/bolcom/mesos_metrics): Go definitions for the Mesos `{master}:5050/metrics/snapshot` and `{slave}:5051/metrics/snapshot` endpoints
 
 ## Contribution
 

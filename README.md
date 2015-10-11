@@ -125,10 +125,6 @@ See [Upgrading Mesos - Upgrading from 0.24.x to 0.25.x](http://mesos.apache.org/
 If you are running a Mesos cluster >= 0.25.x and you can make this library working with it, please start a Pull Request or open an issue.
 We are happy to get this support into.
 
-## TODO-List
-
-* Add doc.go
-
 ## Other/Similar projects
 
 * [boldfield/go-mesos](https://github.com/boldfield/go-mesos): A client for discovering information about a Mesos exposed via HTTP API

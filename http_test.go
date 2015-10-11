@@ -85,6 +85,58 @@ func TestGetBodyOfHTTPResponse_WithError(t *testing.T) {
 	}
 }
 
+func TestGetHTTPResponseFromCluster_NoMaster(t *testing.T) {
+	setup()
+	defer teardown()
+
+	testFunc := func(u url.URL) url.URL {
+		v, _ := url.Parse("http://not-existing.example.org/")
+		return *v
+	}
+	resp, err := client.GetHTTPResponseFromCluster(testFunc)
+	if resp != nil {
+		t.Errorf("Response is not nil. Expected nil, got %+v", resp)
+	}
+
+	if err == nil {
+		t.Error("Error is nil. Expected an error (No master online.).")
+	}
+}
+
+func TestGetHTTPResponseFromCluster(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux2.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		fmt.Fprint(w, getContentOfFile("tests/master1.state.json"))
+	})
+
+	i := 0
+	testFunc := func(u url.URL) url.URL {
+		i++
+		// The first node should fail
+		// With this we can ensure that more than one node is requested in failure case
+		if i == 1 {
+			v, _ := url.Parse("http://not-existing.example.org/")
+			return *v
+		}
+		u.Path = "master/state.json"
+		return u
+	}
+	resp, err := client.GetHTTPResponseFromCluster(testFunc)
+	if resp == nil {
+		t.Errorf("Response is nil. Expected valid response, got nil")
+	}
+
+	if resp.StatusCode != 200 {
+		t.Errorf("Response status code is not 200. Expected 200, got %d", resp.StatusCode)
+	}
+
+	if err != nil {
+		t.Errorf("Error is not nil. Expected nil, got %s.", err)
+	}
+}
+
 // Missing tests:
-// * GetHTTPResponseFromCluster
 // * GetHTTPResponseFromLeader

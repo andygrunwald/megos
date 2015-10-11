@@ -2,6 +2,7 @@ package megos
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -70,6 +71,16 @@ func testMethod(t *testing.T, r *http.Request, want string) {
 	if got := r.Method; got != want {
 		t.Errorf("Request method: %v, want %v", got, want)
 	}
+}
+
+// getContentOfFile is a utility method to open and return the content of fileName
+func getContentOfFile(fileName string) []byte {
+	content, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		return []byte{}
+	}
+
+	return content
 }
 
 func TestNewClient(t *testing.T) {

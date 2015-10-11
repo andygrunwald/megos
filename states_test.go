@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -115,7 +117,7 @@ func TestGetStateFromLeader_NoLeaderOnline(t *testing.T) {
 	}
 }
 
-func GetStateFromLeader(t *testing.T) {
+func TestGetStateFromLeader(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -125,7 +127,70 @@ func GetStateFromLeader(t *testing.T) {
 		fmt.Fprint(w, string(c))
 	})
 
+	u, _ := url.Parse(server1.URL)
+	parts := strings.Split(u.Host, ":")
+	host, port := parts[0], parts[1]
+	portI, _ := strconv.Atoi(port)
+	client.Leader = &Pid{
+		Role: "master",
+		Host: host,
+		Port: portI,
+	}
 	state, err := client.GetStateFromLeader()
+
+	if state == nil {
+		t.Error("State is nil. Expected valid state struct")
+	}
+
+	// Check if some random samples are matching with dummy content in master1.state.json
+	if state != nil && (state.Cluster != "chronos1" || state.Version != "0.22.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
+		t.Error("Random samples are not matching with test mock data.")
+	}
+
+	if err != nil {
+		t.Errorf("Error is not nil. Expected nil, got %s", err)
+	}
+}
+
+func TestGetStateFromPid_PidOffline(t *testing.T) {
+	setup()
+	defer teardown()
+
+	p := &Pid{
+		Role: "master",
+		Host: "not-existing.example.org",
+	}
+	state, err := client.GetStateFromPid(p)
+
+	if state != nil {
+		t.Errorf("State is not nil. Expected nil. Got %+v", state)
+	}
+
+	if err == nil {
+		t.Error("Error is nil. Expected an error.")
+	}
+}
+
+func TestGetStateFromPid(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux1.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		c := getContentOfFile("tests/master1.state.json")
+		fmt.Fprint(w, string(c))
+	})
+
+	u, _ := url.Parse(server1.URL)
+	parts := strings.Split(u.Host, ":")
+	host, port := parts[0], parts[1]
+	portI, _ := strconv.Atoi(port)
+	p := &Pid{
+		Role: "master",
+		Host: host,
+		Port: portI,
+	}
+	state, err := client.GetStateFromPid(p)
 
 	if state == nil {
 		t.Error("State is nil. Expected valid state struct")
@@ -140,6 +205,3 @@ func GetStateFromLeader(t *testing.T) {
 		t.Errorf("Error is not nil. Expected nil, got %s.", err)
 	}
 }
-
-// Missing tests:
-// * GetStateFromPid

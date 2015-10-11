@@ -4,6 +4,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 // TODO Support new mesos version
@@ -11,6 +12,8 @@ import (
 
 // Client manages the communication with the Mesos cluster.
 type Client struct {
+	sync.Mutex
+
 	// Master is the list of Mesos master nodes in the cluster.
 	Master []*url.URL
 	// Leader is the PID reference to the Leader of the Cluster (of Master URLs)
@@ -51,8 +54,9 @@ func (c *Client) DetermineLeader() (*Pid, error) {
 
 	pid := c.ParsePidInformation(state.Leader)
 
-	// TODO If we want to refresh this, mutex!
+	c.Lock()
 	c.Leader = pid
+	c.Unlock()
 
 	return c.Leader, nil
 }

@@ -42,8 +42,9 @@ func (c *Client) parseStateResponse(resp *http.Response, err error) (*State, err
 		return nil, err
 	}
 
-	// TODO Mutex
+	c.Lock()
 	c.State = &state
+	c.Unlock()
 
 	return c.State, nil
 }

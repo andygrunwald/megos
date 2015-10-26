@@ -144,7 +144,7 @@ type Task struct {
 type Resources struct {
 	CPUs  float32 `json:"cpus"`
 	Disk  int     `json:"disk"`
-	Mem   int     `json:"mem"`
+	Mem   float64 `json:"mem"`
 	Ports string  `json:"ports"`
 }
 
@@ -156,14 +156,13 @@ type TaskStatus struct {
 
 // Slave represents a single mesos slave node
 type Slave struct {
-	// Missing fields
-	// TODO "attributes": {},
-	Active         bool      `json:"active"`
-	Hostname       string    `json:"hostname"`
-	ID             string    `json:"id"`
-	PID            string    `json:"pid"`
-	RegisteredTime float32   `json:"registered_time"`
-	Resources      Resources `json:"resources"`
+	Active         bool              `json:"active"`
+	Hostname       string            `json:"hostname"`
+	ID             string            `json:"id"`
+	PID            string            `json:"pid"`
+	RegisteredTime float32           `json:"registered_time"`
+	Resources      Resources         `json:"resources"`
+	Attributes     map[string]string `json:"attributes"`
 }
 
 // Executor represents a single executor of a framework

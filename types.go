@@ -2,48 +2,41 @@ package megos
 
 // State represents the JSON from the state.json of a mesos node
 type State struct {
-	// Missing fields...
-	// TODO "attributes": {},
-	// TODO Better type as string for "2015-05-05 06:16:58" ?
-	// TODO: completed_frameworks "completed_frameworks": [],
-	// TODO "orphan_tasks": [],
 	ActivatedSlaves        int         `json:"activated_slaves"`
 	BuildDate              string      `json:"build_date"`
 	BuildTime              int         `json:"build_time"`
 	BuildUser              string      `json:"build_user"`
 	Cluster                string      `json:"cluster"`
+	CompletedFrameworks    []Framework `json:"completed_frameworks"`
 	DeactivatedSlaves      int         `json:"deactivated_slaves"`
 	ElectedTime            float32     `json:"elected_time"`
-	FailedTasks            int         `json:"failed_tasks"`
-	FinishedTasks          int         `json:"finished_tasks"`
 	Flags                  Flags       `json:"flags"`
 	Frameworks             []Framework `json:"frameworks"`
 	GitSHA                 string      `json:"git_sha"`
+	GitBranch              string      `json:"git_branch"`
 	GitTag                 string      `json:"git_tag"`
 	Hostname               string      `json:"hostname"`
 	ID                     string      `json:"id"`
-	KilledTasks            int         `json:"killed_tasks"`
 	Leader                 string      `json:"leader"`
 	LogDir                 string      `json:"log_dir"`
-	LostTasks              int         `json:"lost_tasks"`
-	MasterHostname         string      `json:"master_hostname"`
+	ExternalLogFile        string      `json:"external_log_file"`
+	OrphanTasks            []Task      `json:"orphan_tasks"`
 	PID                    string      `json:"pid"`
-	Resources              Resources   `json:"resources"`
 	Slaves                 []Slave     `json:"slaves"`
-	StagedTasks            int         `json:"staged_tasks"`
 	StartTime              float32     `json:"start_time"`
-	StartedTasks           int         `json:"started_tasks"`
-	UnregisteredFrameworks []Framework `json:"unregistered_frameworks"`
+	UnregisteredFrameworks []string    `json:"unregistered_frameworks"`
 	Version                string      `json:"version"`
 }
 
 // Flags represents the flags of a mesos state
 type Flags struct {
 	AllocationInterval          string `json:"allocation_interval"`
+	Allocator                   string `json:"allocator"`
 	Authenticate                string `json:"authenticate"`
 	Authenticatee               string `json:"authenticatee"`
 	AuthenticateSlaves          string `json:"authenticate_slaves"`
 	Authenticators              string `json:"authenticators"`
+	Authorizers                 string `json:"authorizers"`
 	CgroupsEnableCfs            string `json:"cgroups_enable_cfs"`
 	CgroupsHierarchy            string `json:"cgroups_hierarchy"`
 	CgroupsLimitSwap            string `json:"cgroups_limit_swap"`
@@ -75,6 +68,7 @@ type Flags struct {
 	LogDir                      string `json:"log_dir"`
 	Logbufsecs                  string `json:"logbufsecs"`
 	LoggingLevel                string `json:"logging_level"`
+	MaxSlavePingTimeouts        string `json:"max_slave_ping_timeouts"`
 	Master                      string `json:"master"`
 	PerfDuration                string `json:"perf_duration"`
 	PerfInterval                string `json:"perf_interval"`
@@ -91,6 +85,7 @@ type Flags struct {
 	RegistryStrict              string `json:"registry_strict"`
 	ResourceMonitoringInterval  string `json:"resource_monitoring_interval"`
 	RootSubmissions             string `json:"root_submissions"`
+	SlavePingTimeout            string `json:"slave_ping_timeout"`
 	SlaveReregisterTimeout      string `json:"slave_reregister_timeout"`
 	Strict                      string `json:"strict"`
 	SwitchUser                  string `json:"switch_user"`
@@ -104,26 +99,59 @@ type Flags struct {
 
 // Framework represent a single framework of a mesos node
 type Framework struct {
-	// Missing fields
-	// TODO: "offers": [],
-	Active             bool       `json:"active"`
-	Checkpoint         bool       `json:"checkpoint"`
-	CompletedExecutors []Executor `json:"completed_executors"`
-	CompletedTasks     []Task     `json:"completed_tasks"`
-	FailoverTimeout    int        `json:"failover_timeout"`
-	Hostname           string     `json:"hostname"`
-	ID                 string     `json:"id"`
-	Name               string     `json:"name"`
-	OfferedResources   Resources  `json:"offered_resources"`
-	RegisteredTime     float32    `json:"registered_time"`
-	ReregisteredTime   float32    `json:"reregistered_time"`
-	Resources          Resources  `json:"resources"`
-	Role               string     `json:"role"`
-	Tasks              []Task     `json:"tasks"`
-	UnregisteredTime   float32    `json:"unregistered_time"`
-	UsedResources      Resources  `json:"used_resources"`
-	User               string     `json:"user"`
-	WebuiURL           string     `json:"webui_url"`
+	Active           bool       `json:"active"`
+	Checkpoint       bool       `json:"checkpoint"`
+	CompletedTasks   []Task     `json:"completed_tasks"`
+	Executors        []Executor `json:"executors"`
+	FailoverTimeout  int        `json:"failover_timeout"`
+	Hostname         string     `json:"hostname"`
+	ID               string     `json:"id"`
+	Name             string     `json:"name"`
+	OfferedResources Resources  `json:"offered_resources"`
+	Offers           []Offer    `json:"offers"`
+	RegisteredTime   float32    `json:"registered_time"`
+	ReregisteredTime float32    `json:"reregistered_time"`
+	Resources        Resources  `json:"resources"`
+	Role             string     `json:"role"`
+	Tasks            []Task     `json:"tasks"`
+	UnregisteredTime float32    `json:"unregistered_time"`
+	UsedResources    Resources  `json:"used_resources"`
+	User             string     `json:"user"`
+	WebuiURL         string     `json:"webui_url"`
+	Labels           []Label    `json:"label"`
+}
+
+type Offer struct {
+	ID          string            `json:"id"`
+	FrameworkID string            `json:"framework_id"`
+	SlaveID     string            `json:"slave_id"`
+	Hostname    string            `json:"hostname"`
+	URL         URL               `json:"url"`
+	Resources   Resources         `json:"resources"`
+	Attributes  map[string]string `json:"attributes"`
+}
+
+type URL struct {
+	Scheme     string      `json:"scheme"`
+	Address    Address     `json:"address"`
+	Path       string      `json:"path"`
+	Parameters []Parameter `json:"parameters"`
+}
+
+type Address struct {
+	Hostname string `json:"hostname"`
+	IP       string `json:"ip"`
+	Port     int    `json:"port"`
+}
+
+type Parameter struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
+type Label struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
 }
 
 // Task represent a single Mesos task

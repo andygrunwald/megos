@@ -2,13 +2,13 @@ package megos
 
 // State represents the JSON from the state.json of a mesos node
 type State struct {
-	ActivatedSlaves        int         `json:"activated_slaves"`
+	ActivatedSlaves        float32     `json:"activated_slaves"`
 	BuildDate              string      `json:"build_date"`
-	BuildTime              int         `json:"build_time"`
+	BuildTime              float32     `json:"build_time"`
 	BuildUser              string      `json:"build_user"`
 	Cluster                string      `json:"cluster"`
 	CompletedFrameworks    []Framework `json:"completed_frameworks"`
-	DeactivatedSlaves      int         `json:"deactivated_slaves"`
+	DeactivatedSlaves      float32     `json:"deactivated_slaves"`
 	ElectedTime            float32     `json:"elected_time"`
 	Flags                  Flags       `json:"flags"`
 	Frameworks             []Framework `json:"frameworks"`
@@ -103,7 +103,7 @@ type Framework struct {
 	Checkpoint       bool       `json:"checkpoint"`
 	CompletedTasks   []Task     `json:"completed_tasks"`
 	Executors        []Executor `json:"executors"`
-	FailoverTimeout  int        `json:"failover_timeout"`
+	FailoverTimeout  float32    `json:"failover_timeout"`
 	Hostname         string     `json:"hostname"`
 	ID               string     `json:"id"`
 	Name             string     `json:"name"`
@@ -171,7 +171,7 @@ type Task struct {
 // Resources represents a resource type for a task
 type Resources struct {
 	CPUs  float32 `json:"cpus"`
-	Disk  int     `json:"disk"`
+	Disk  float64 `json:"disk"`
 	Mem   float64 `json:"mem"`
 	Ports string  `json:"ports"`
 }

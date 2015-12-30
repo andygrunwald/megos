@@ -1,6 +1,7 @@
 package megos
 
 import (
+	"errors"
 	"net/url"
 	"strconv"
 	"strings"
@@ -52,7 +53,10 @@ func (c *Client) DetermineLeader() (*Pid, error) {
 		return nil, err
 	}
 
-	pid := c.ParsePidInformation(state.Leader)
+	pid, err := c.ParsePidInformation(state.Leader)
+	if err != nil {
+		return nil, err
+	}
 
 	c.Lock()
 	c.Leader = pid
@@ -65,8 +69,11 @@ func (c *Client) DetermineLeader() (*Pid, error) {
 // into a Pid structure to access single parts of the PID on its own.
 //
 // Example pid: master@10.1.1.12:5050
-func (c *Client) ParsePidInformation(pid string) *Pid {
+func (c *Client) ParsePidInformation(pid string) (*Pid, error) {
 	firstPart := strings.Split(pid, "@")
+	if len(firstPart) != 2 {
+		return nil, errors.New("Invalid master pid.")
+	}
 	secondPart := strings.Split(firstPart[1], ":")
 
 	var port int
@@ -84,7 +91,7 @@ func (c *Client) ParsePidInformation(pid string) *Pid {
 		Role: firstPart[0],
 		Host: secondPart[0],
 		Port: port,
-	}
+	}, nil
 }
 
 // String implements the Stringer interface for PID.

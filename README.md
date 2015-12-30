@@ -91,7 +91,7 @@ framework, _ := mesos.GetFrameworkByPrefix(state.Frameworks, frameworkPrefix)
 task, _ := mesos.GetTaskByID(framework.CompletedTasks, taskID)
 slave, _ := mesos.GetSlaveByID(state.Slaves, task.SlaveID)
 
-pid := mesos.ParsePidInformation(slave.PID)
+pid, _ := mesos.ParsePidInformation(slave.PID)
 slaveState, _ := mesos.GetStateFromPid(pid)
 
 framework, _ = mesos.GetFrameworkByPrefix(slaveState.Frameworks, frameworkPrefix)

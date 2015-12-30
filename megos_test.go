@@ -116,7 +116,7 @@ func TestParsePidInformation_WithPort(t *testing.T) {
 	host := "10.1.1.12"
 	port := 5555
 	pid := fmt.Sprintf("%s@%s:%d", role, host, port)
-	parsedPid := client.ParsePidInformation(pid)
+	parsedPid, _ := client.ParsePidInformation(pid)
 
 	if parsedPid.Role != role {
 		t.Errorf("Role is not equal. Expected %s, got %s", role, parsedPid.Role)
@@ -134,7 +134,7 @@ func TestParsePidInformation_WithoutPort(t *testing.T) {
 	host := "10.1.1.12"
 	port := 5050
 	pid := fmt.Sprintf("%s@%s", role, host)
-	parsedPid := client.ParsePidInformation(pid)
+	parsedPid, _ := client.ParsePidInformation(pid)
 
 	if parsedPid.Role != role {
 		t.Errorf("Role is not equal. Expected %s, got %s", role, parsedPid.Role)
@@ -152,7 +152,7 @@ func TestParsePidInformation_String(t *testing.T) {
 	host := "10.1.1.12"
 	port := 5555
 	pid := fmt.Sprintf("%s@%s:%d", role, host, port)
-	parsedPid := client.ParsePidInformation(pid)
+	parsedPid, _ := client.ParsePidInformation(pid)
 
 	if s := parsedPid.String(); s != pid {
 		t.Errorf("Stringer of pid is not equal. Expected %s, got %s", pid, s)

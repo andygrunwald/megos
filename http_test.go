@@ -121,7 +121,7 @@ func TestGetHTTPResponseFromCluster(t *testing.T) {
 			v, _ := url.Parse("http://not-existing.example.org/")
 			return *v
 		}
-		u.Path = "master/state.json"
+		u.Path = "master/state"
 		return u
 	}
 	resp, err := client.GetHTTPResponseFromCluster(testFunc)

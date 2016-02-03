@@ -180,7 +180,7 @@ func TestDetermineLeader(t *testing.T) {
 	defer teardown()
 	expected := "master@192.168.1.12:5050"
 
-	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
+	mux1.HandleFunc("/master/state", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		c := getContentOfFile("tests/master1.state.json")
 		fmt.Fprint(w, string(c))

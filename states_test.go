@@ -16,7 +16,7 @@ func TestGetURLForStateFile(t *testing.T) {
 	masterNode := client.Master[1]
 	u := client.GetURLForStateFile(*masterNode)
 
-	ms := masterNode.String() + "/master/state.json"
+	ms := masterNode.String() + "/master/state"
 	if us := u.String(); ms != us {
 		t.Errorf("URLs not the same. Expected %s, got %s", ms, us)
 	}
@@ -34,7 +34,7 @@ func TestGetURLForStateFilePid(t *testing.T) {
 
 	u := client.GetURLForStateFilePid(p)
 
-	ps := fmt.Sprintf("http://%s:%d/master/state.json", p.Host, p.Port)
+	ps := fmt.Sprintf("http://%s:%d/master/state", p.Host, p.Port)
 	if us := u.String(); ps != us {
 		t.Errorf("URLs not the same. Expected %s, got %s", ps, us)
 	}
@@ -61,7 +61,7 @@ func TestGetStateFromCluster(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
+	mux1.HandleFunc("/master/state", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		c := getContentOfFile("tests/master1.state.json")
 		fmt.Fprint(w, string(c))
@@ -121,7 +121,7 @@ func TestGetStateFromLeader(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
+	mux1.HandleFunc("/master/state", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		c := getContentOfFile("tests/master1.state.json")
 		fmt.Fprint(w, string(c))
@@ -175,7 +175,7 @@ func TestGetStateFromPid(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux1.HandleFunc("/master/state.json", func(w http.ResponseWriter, r *http.Request) {
+	mux1.HandleFunc("/master/state", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		c := getContentOfFile("tests/master1.state.json")
 		fmt.Fprint(w, string(c))

@@ -8,9 +8,9 @@ import (
 func TestGetTaskByID_WithTask(t *testing.T) {
 	taskID := "Task2"
 	tasks := []Task{
-		Task{ID: "Task1", Name: "Test task one"},
-		Task{ID: "Task2", Name: "Test task two"},
-		Task{ID: "Task3", Name: "Test task three"},
+		{ID: "Task1", Name: "Test task one"},
+		{ID: "Task2", Name: "Test task two"},
+		{ID: "Task3", Name: "Test task three"},
 	}
 
 	if ta, err := client.GetTaskByID(tasks, taskID); !reflect.DeepEqual(ta, &tasks[1]) {
@@ -21,9 +21,9 @@ func TestGetTaskByID_WithTask(t *testing.T) {
 func TestGetTaskByID_WithoutTask(t *testing.T) {
 	taskID := "Task4"
 	tasks := []Task{
-		Task{ID: "Task1", Name: "Test task one"},
-		Task{ID: "Task2", Name: "Test task two"},
-		Task{ID: "Task3", Name: "Test task three"},
+		{ID: "Task1", Name: "Test task one"},
+		{ID: "Task2", Name: "Test task two"},
+		{ID: "Task3", Name: "Test task three"},
 	}
 
 	ta, err := client.GetTaskByID(tasks, taskID)

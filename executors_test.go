@@ -8,9 +8,9 @@ import (
 func TestGetExecutorByID_WithExecutor(t *testing.T) {
 	executorID := "Executor3"
 	executor := []Executor{
-		Executor{ID: "Executor1", Name: "Test Executor one"},
-		Executor{ID: "Executor2", Name: "Test Executor two"},
-		Executor{ID: "Executor3", Name: "Test Executor three"},
+		{ID: "Executor1", Name: "Test Executor one"},
+		{ID: "Executor2", Name: "Test Executor two"},
+		{ID: "Executor3", Name: "Test Executor three"},
 	}
 
 	if e, err := client.GetExecutorByID(executor, executorID); !reflect.DeepEqual(e, &executor[2]) {
@@ -21,9 +21,9 @@ func TestGetExecutorByID_WithExecutor(t *testing.T) {
 func TestGetExecutorByID_WithoutExecutor(t *testing.T) {
 	executorID := "Executor4"
 	executor := []Executor{
-		Executor{ID: "Executor1", Name: "Test Executor one"},
-		Executor{ID: "Executor2", Name: "Test Executor two"},
-		Executor{ID: "Executor3", Name: "Test Executor three"},
+		{ID: "Executor1", Name: "Test Executor one"},
+		{ID: "Executor2", Name: "Test Executor two"},
+		{ID: "Executor3", Name: "Test Executor three"},
 	}
 
 	e, err := client.GetExecutorByID(executor, executorID)

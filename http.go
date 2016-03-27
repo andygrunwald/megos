@@ -9,7 +9,7 @@ import (
 
 // GetHTTPResponseFromCluster will return a http.Response from one of the Mesos master nodes.
 // In a cluster the master nodes can be online or offline.
-// With GetHTTPResponseFromCluster you will recieve a response from one of the nodes.
+// With GetHTTPResponseFromCluster you will receive a response from one of the nodes.
 func (c *Client) GetHTTPResponseFromCluster(f func(url.URL) url.URL) (*http.Response, error) {
 	for _, instance := range c.Master {
 		u := f(*instance)

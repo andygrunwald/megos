@@ -8,9 +8,9 @@ import (
 func TestGetSlaveByID_WithSlave(t *testing.T) {
 	slaveID := "Slave2"
 	slaves := []Slave{
-		Slave{ID: "Slave1"},
-		Slave{ID: "Slave2"},
-		Slave{ID: "Slave3"},
+		{ID: "Slave1"},
+		{ID: "Slave2"},
+		{ID: "Slave3"},
 	}
 
 	if s, err := client.GetSlaveByID(slaves, slaveID); !reflect.DeepEqual(s, &slaves[1]) {
@@ -21,9 +21,9 @@ func TestGetSlaveByID_WithSlave(t *testing.T) {
 func TestGetSlaveByID_WithoutSlave(t *testing.T) {
 	slaveID := "Slave5"
 	slaves := []Slave{
-		Slave{ID: "Slave1"},
-		Slave{ID: "Slave2"},
-		Slave{ID: "Slave3"},
+		{ID: "Slave1"},
+		{ID: "Slave2"},
+		{ID: "Slave3"},
 	}
 
 	s, err := client.GetSlaveByID(slaves, slaveID)

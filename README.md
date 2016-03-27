@@ -71,7 +71,7 @@ if err != nil {
 
 fmt.Printf("Mesos v%s", state.Version)
 // Output:
-// Mesos 0.22.1
+// Mesos v0.26.0
 ```
 
 ### Get stdout and stderr of a task
@@ -118,14 +118,12 @@ fmt.Println(stdErr)
 
 ## Version compatibility
 
-This library was tested with Apache Mesos in version 0.22.1.
-In theory this should work up to version 0.24.x (including).
+This library was tested with Apache Mesos in version 0.26.0.
+In theory this should work with versions >= v0.25.x.
 
 In version 0.25.x they renamed various API endpoints (like state.json to /state).
 See [Upgrading Mesos - Upgrading from 0.24.x to 0.25.x](http://mesos.apache.org/documentation/latest/upgrades/) for details.
-
-If you are running a Mesos cluster >= 0.25.x and you can make this library working with it, please start a Pull Request or open an issue.
-We are happy to get this support into.
+This is the reason why we support no lower versions of Mesos.
 
 ## Other/Similar projects
 

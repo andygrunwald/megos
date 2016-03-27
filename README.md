@@ -5,7 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/andygrunwald/megos)](https://goreportcard.com/report/github.com/andygrunwald/megos)
 [![Coverage Status](https://coveralls.io/repos/github/andygrunwald/megos/badge.svg?branch=master)](https://coveralls.io/github/andygrunwald/megos?branch=master)
 
-[Go(lang)](https://golang.org/) client library for accessing [Apache Mesos](http://mesos.apache.org/) cluster.
+[Go(lang)](https://golang.org/) client library for accessing an [Apache Mesos](http://mesos.apache.org/) cluster.
 
 ## Features
 

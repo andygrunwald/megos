@@ -2,14 +2,14 @@ package megos
 
 // State represents the JSON from the state.json of a mesos node
 type State struct {
-	ActivatedSlaves        float32     `json:"activated_slaves"`
+	ActivatedSlaves        float64     `json:"activated_slaves"`
 	BuildDate              string      `json:"build_date"`
-	BuildTime              float32     `json:"build_time"`
+	BuildTime              float64     `json:"build_time"`
 	BuildUser              string      `json:"build_user"`
 	Cluster                string      `json:"cluster"`
 	CompletedFrameworks    []Framework `json:"completed_frameworks"`
-	DeactivatedSlaves      float32     `json:"deactivated_slaves"`
-	ElectedTime            float32     `json:"elected_time"`
+	DeactivatedSlaves      float64     `json:"deactivated_slaves"`
+	ElectedTime            float64     `json:"elected_time"`
 	Flags                  Flags       `json:"flags"`
 	Frameworks             []Framework `json:"frameworks"`
 	GitSHA                 string      `json:"git_sha"`
@@ -23,7 +23,7 @@ type State struct {
 	OrphanTasks            []Task      `json:"orphan_tasks"`
 	PID                    string      `json:"pid"`
 	Slaves                 []Slave     `json:"slaves"`
-	StartTime              float32     `json:"start_time"`
+	StartTime              float64     `json:"start_time"`
 	UnregisteredFrameworks []string    `json:"unregistered_frameworks"`
 	Version                string      `json:"version"`
 }
@@ -103,18 +103,18 @@ type Framework struct {
 	Checkpoint       bool       `json:"checkpoint"`
 	CompletedTasks   []Task     `json:"completed_tasks"`
 	Executors        []Executor `json:"executors"`
-	FailoverTimeout  float32    `json:"failover_timeout"`
+	FailoverTimeout  float64    `json:"failover_timeout"`
 	Hostname         string     `json:"hostname"`
 	ID               string     `json:"id"`
 	Name             string     `json:"name"`
 	OfferedResources Resources  `json:"offered_resources"`
 	Offers           []Offer    `json:"offers"`
-	RegisteredTime   float32    `json:"registered_time"`
-	ReregisteredTime float32    `json:"reregistered_time"`
+	RegisteredTime   float64    `json:"registered_time"`
+	ReregisteredTime float64    `json:"reregistered_time"`
 	Resources        Resources  `json:"resources"`
 	Role             string     `json:"role"`
 	Tasks            []Task     `json:"tasks"`
-	UnregisteredTime float32    `json:"unregistered_time"`
+	UnregisteredTime float64    `json:"unregistered_time"`
 	UsedResources    Resources  `json:"used_resources"`
 	User             string     `json:"user"`
 	WebuiURL         string     `json:"webui_url"`
@@ -176,7 +176,7 @@ type Task struct {
 
 // Resources represents a resource type for a task
 type Resources struct {
-	CPUs  float32 `json:"cpus"`
+	CPUs  float64 `json:"cpus"`
 	Disk  float64 `json:"disk"`
 	Mem   float64 `json:"mem"`
 	Ports string  `json:"ports"`
@@ -185,7 +185,7 @@ type Resources struct {
 // TaskStatus represents the status of a single task
 type TaskStatus struct {
 	State     string  `json:"state"`
-	Timestamp float32 `json:"timestamp"`
+	Timestamp float64 `json:"timestamp"`
 }
 
 // Slave represents a single mesos slave node
@@ -194,7 +194,7 @@ type Slave struct {
 	Hostname       string            `json:"hostname"`
 	ID             string            `json:"id"`
 	PID            string            `json:"pid"`
-	RegisteredTime float32           `json:"registered_time"`
+	RegisteredTime float64           `json:"registered_time"`
 	Resources      Resources         `json:"resources"`
 	Attributes     map[string]string `json:"attributes"`
 }

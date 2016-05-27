@@ -1,60 +1,214 @@
 {
-    "activated_slaves": 0,
-    "build_date": "2015-05-05 06:16:58",
-    "build_time": 1430806618,
+    "version": "0.28.1",
+    "git_sha": "555db235a34afbb9fb49940376cc33a66f1f85f0",
+    "git_tag": "0.28.1",
+    "build_date": "2016-04-14 15:41:24",
+    "build_time": 1460648484,
     "build_user": "root",
-    "cluster": "chronos1",
-    "completed_frameworks": [],
+    "start_time": 1464362111.01416,
+    "elected_time": 1464362114.50161,
+    "id": "69c30f85-3c9b-4cb3-8cfd-b7ff5ec68e74",
+    "pid": "master@192.168.99.100:5050",
+    "hostname": "192.168.99.100",
+    "activated_slaves": 1,
     "deactivated_slaves": 0,
-    "failed_tasks": 0,
-    "finished_tasks": 0,
+    "cluster": "docker-compose",
+    "leader": "master@192.168.99.100:5050",
     "flags": {
         "allocation_interval": "1secs",
+        "allocator": "HierarchicalDRF",
         "authenticate": "false",
+        "authenticate_http": "false",
         "authenticate_slaves": "false",
         "authenticators": "crammd5",
-        "cluster": "chronos1",
+        "authorizers": "local",
+        "cluster": "docker-compose",
         "framework_sorter": "drf",
         "help": "false",
-        "hostname": "192.168.1.10",
-        "initialize_driver_logging": "true",
-        "ip": "192.168.1.10",
-        "log_auto_initialize": "true",
         "log_dir": "/var/log/mesos",
-        "logbufsecs": "10",
+        "hostname": "192.168.99.100",
+        "hostname_lookup": "true",
+        "http_authenticators": "basic",
+        "initialize_driver_logging": "true",
+        "log_auto_initialize": "true",
+        "logbufsecs": "0",
         "logging_level": "INFO",
+        "max_completed_frameworks": "50",
+        "max_completed_tasks_per_framework": "1000",
+        "max_slave_ping_timeouts": "5",
         "port": "5050",
         "quiet": "false",
         "quorum": "1",
         "recovery_slave_removal_limit": "100%",
-        "registry": "replicated_log",
+        "registry": "in_memory",
         "registry_fetch_timeout": "1mins",
-        "registry_store_timeout": "5secs",
+        "registry_store_timeout": "20secs",
         "registry_strict": "false",
         "root_submissions": "true",
+        "slave_ping_timeout": "15secs",
         "slave_reregister_timeout": "10mins",
         "user_sorter": "drf",
         "version": "false",
         "webui_dir": "/usr/share/mesos/webui",
-        "work_dir": "/var/lib/mesos",
-        "zk": "zk://192.168.1.20:2181,192.168.1.21:2181,192.168.1.22:2181/cluster/mesos",
+        "zk": "zk://127.0.0.1:2181/mesos",
         "zk_session_timeout": "10secs"
     },
-    "frameworks": [],
-    "git_sha": "d6309f92a7f9af3ab61a878403e3d9c284ea87e0",
-    "git_tag": "0.22.1",
-    "hostname": "192.168.1.10",
-    "id": "20150917-175417-2013397258-5050-961",
-    "killed_tasks": 0,
-    "leader": "master@192.168.1.12:5050",
-    "log_dir": "/var/log/mesos",
-    "lost_tasks": 0,
+    "slaves": [
+        {
+            "id": "69c30f85-3c9b-4cb3-8cfd-b7ff5ec68e74-S0",
+            "pid": "slave(1)@192.168.99.100:5051",
+            "hostname": "192.168.99.100",
+            "registered_time": 1464362114.70128,
+            "resources": {
+                "cpus": 1,
+                "disk": 192199,
+                "mem": 1001,
+                "ports": "[11000-11999]"
+            },
+            "used_resources": {
+                "cpus": 0.2,
+                "disk": 0,
+                "mem": 32,
+                "ports": "[11913-11913]"
+            },
+            "offered_resources": {
+                "cpus": 0,
+                "disk": 0,
+                "mem": 0
+            },
+            "reserved_resources": {},
+            "unreserved_resources": {
+                "cpus": 1,
+                "disk": 192199,
+                "mem": 1001,
+                "ports": "[11000-11999]"
+            },
+            "attributes": {
+                "rack": 106,
+                "type": "storage"
+            },
+            "active": true,
+            "version": "0.28.1"
+        }
+    ],
+    "frameworks": [
+        {
+            "id": "69c30f85-3c9b-4cb3-8cfd-b7ff5ec68e74-0001",
+            "name": "marathon",
+            "pid": "scheduler-cf376a7d-c513-4199-beaf-5aa1bf4d2c82@127.0.0.1:34218",
+            "used_resources": {
+                "cpus": 0.2,
+                "disk": 0,
+                "mem": 32,
+                "ports": "[11913-11913]"
+            },
+            "offered_resources": {
+                "cpus": 0,
+                "disk": 0,
+                "mem": 0
+            },
+            "capabilities": [],
+            "hostname": "default",
+            "webui_url": "http://default:8080",
+            "active": true,
+            "user": "root",
+            "failover_timeout": 604800,
+            "checkpoint": true,
+            "role": "*",
+            "registered_time": 1464362122.16334,
+            "unregistered_time": 0,
+            "resources": {
+                "cpus": 0.2,
+                "disk": 0,
+                "mem": 32,
+                "ports": "[11913-11913]"
+            },
+            "tasks": [
+                {
+                    "id": "simple-webserver.857d518f-241e-11e6-a10b-02424e0f635b",
+                    "name": "simple-webserver",
+                    "framework_id": "69c30f85-3c9b-4cb3-8cfd-b7ff5ec68e74-0001",
+                    "executor_id": "",
+                    "slave_id": "69c30f85-3c9b-4cb3-8cfd-b7ff5ec68e74-S0",
+                    "state": "TASK_RUNNING",
+                    "resources": {
+                        "cpus": 0.2,
+                        "disk": 0,
+                        "mem": 32,
+                        "ports": "[11913-11913]"
+                    },
+                    "statuses": [
+                        {
+                            "state": "TASK_RUNNING",
+                            "timestamp": 1464362423.43271,
+                            "container_status": {
+                                "network_infos": [
+                                    {
+                                        "ip_address": "192.168.99.100",
+                                        "ip_addresses": [
+                                            {
+                                                "ip_address": "192.168.99.100"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "discovery": {
+                        "visibility": "FRAMEWORK",
+                        "name": "simple-webserver",
+                        "ports": {
+                            "ports": [
+                                {
+                                    "number": 11913,
+                                    "protocol": "tcp"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "completed_tasks": [],
+            "offers": [],
+            "executors": []
+        },
+        {
+            "id": "69c30f85-3c9b-4cb3-8cfd-b7ff5ec68e74-0000",
+            "name": "chronos-2.4.0",
+            "pid": "scheduler-64832758-687c-42f4-9ebc-aa897f98d4c1@127.0.0.1:36725",
+            "used_resources": {
+                "cpus": 0,
+                "disk": 0,
+                "mem": 0
+            },
+            "offered_resources": {
+                "cpus": 0,
+                "disk": 0,
+                "mem": 0
+            },
+            "capabilities": [],
+            "hostname": "default",
+            "webui_url": "http://default:8888",
+            "active": true,
+            "user": "root",
+            "failover_timeout": 604800,
+            "checkpoint": true,
+            "role": "*",
+            "registered_time": 1464362119.77012,
+            "unregistered_time": 0,
+            "resources": {
+                "cpus": 0,
+                "disk": 0,
+                "mem": 0
+            },
+            "tasks": [],
+            "completed_tasks": [],
+            "offers": [],
+            "executors": []
+        }
+    ],
+    "completed_frameworks": [],
     "orphan_tasks": [],
-    "pid": "master@192.168.1.10:5050",
-    "slaves": [],
-    "staged_tasks": 0,
-    "start_time": 1442505257.26798,
-    "started_tasks": 0,
-    "unregistered_frameworks": [],
-    "version": "0.22.1"
+    "unregistered_frameworks": []
 }

@@ -113,7 +113,7 @@ func TestNewClient(t *testing.T) {
 
 func TestParsePidInformation_WithPort(t *testing.T) {
 	role := "master"
-	host := "10.1.1.12"
+	host := "192.168.99.100"
 	port := 5555
 	pid := fmt.Sprintf("%s@%s:%d", role, host, port)
 	parsedPid, _ := client.ParsePidInformation(pid)
@@ -131,7 +131,7 @@ func TestParsePidInformation_WithPort(t *testing.T) {
 
 func TestParsePidInformation_WithoutPort(t *testing.T) {
 	role := "master"
-	host := "10.1.1.12"
+	host := "192.168.99.100"
 	port := 5050
 	pid := fmt.Sprintf("%s@%s", role, host)
 	parsedPid, _ := client.ParsePidInformation(pid)
@@ -149,7 +149,7 @@ func TestParsePidInformation_WithoutPort(t *testing.T) {
 
 func TestParsePidInformation_String(t *testing.T) {
 	role := "master"
-	host := "10.1.1.12"
+	host := "192.168.99.100"
 	port := 5555
 	pid := fmt.Sprintf("%s@%s:%d", role, host, port)
 	parsedPid, _ := client.ParsePidInformation(pid)
@@ -178,7 +178,7 @@ func TestDetermineLeader_NoNodeOnline(t *testing.T) {
 func TestDetermineLeader(t *testing.T) {
 	setup()
 	defer teardown()
-	expected := "master@192.168.1.12:5050"
+	expected := "master@192.168.99.100:5050"
 
 	mux1.HandleFunc("/master/state", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")

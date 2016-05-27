@@ -249,19 +249,18 @@ type IpAddress struct {
 
 // Slave represents a single mesos slave node
 type Slave struct {
-	Active              bool      `json:"active"`
-	Hostname            string    `json:"hostname"`
-	ID                  string    `json:"id"`
-	PID                 string    `json:"pid"`
-	RegisteredTime      float64   `json:"registered_time"`
-	Resources           Resources `json:"resources"`
-	UsedResources       Resources `json:"used_resources"`
-	OfferedResources    Resources `json:"offered_resources"`
-	ReservedResources   Resources `json:"reserved_resources"`
-	UnreservedResources Resources `json:"unreserved_resources"`
-	// TODO: https://github.com/andygrunwald/megos/issues/6
-	Attributes map[string]string `json:"attributes"`
-	Version    string            `json:"version"`
+	Active              bool                   `json:"active"`
+	Hostname            string                 `json:"hostname"`
+	ID                  string                 `json:"id"`
+	PID                 string                 `json:"pid"`
+	RegisteredTime      float64                `json:"registered_time"`
+	Resources           Resources              `json:"resources"`
+	UsedResources       Resources              `json:"used_resources"`
+	OfferedResources    Resources              `json:"offered_resources"`
+	ReservedResources   Resources              `json:"reserved_resources"`
+	UnreservedResources Resources              `json:"unreserved_resources"`
+	Attributes          map[string]interface{} `json:"attributes"`
+	Version             string                 `json:"version"`
 }
 
 // Executor represents a single executor of a framework

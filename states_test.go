@@ -74,7 +74,7 @@ func TestGetStateFromCluster(t *testing.T) {
 	}
 
 	// Check if some random samples are matching with dummy content in master1.state.json
-	if state != nil && (state.Cluster != "chronos1" || state.Version != "0.22.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
+	if state != nil && (state.Cluster != "docker-compose" || state.Version != "0.28.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
 		t.Error("Random samples are not matching with test mock data.")
 	}
 
@@ -143,7 +143,7 @@ func TestGetStateFromLeader(t *testing.T) {
 	}
 
 	// Check if some random samples are matching with dummy content in master1.state.json
-	if state != nil && (state.Cluster != "chronos1" || state.Version != "0.22.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
+	if state != nil && (state.Cluster != "docker-compose" || state.Version != "0.28.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
 		t.Error("Random samples are not matching with test mock data.")
 	}
 
@@ -197,7 +197,7 @@ func TestGetStateFromPid(t *testing.T) {
 	}
 
 	// Check if some random samples are matching with dummy content in master1.state.json
-	if state != nil && (state.Cluster != "chronos1" || state.Version != "0.22.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
+	if state != nil && (state.Cluster != "docker-compose" || state.Version != "0.28.1" || state.Flags.LogDir != "/var/log/mesos" || state.Flags.ZKSessionTimeout != "10secs") {
 		t.Error("Random samples are not matching with test mock data.")
 	}
 

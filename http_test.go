@@ -35,7 +35,7 @@ func TestGetHTTPResponse_WithError(t *testing.T) {
 	setup()
 	defer teardown()
 
-	u, _ := url.Parse("http://not-existing.example.org/")
+	u, _ := url.Parse("https://not-existing.example.org/")
 	r, err := client.GetHTTPResponse(u)
 
 	if r != nil {
@@ -73,7 +73,7 @@ func TestGetBodyOfHTTPResponse_WithError(t *testing.T) {
 	defer teardown()
 	expected := []byte{}
 
-	u, _ := url.Parse("http://not-existing.example.org/")
+	u, _ := url.Parse("https://not-existing.example.org/")
 	b, err := client.GetBodyOfHTTPResponse(u)
 
 	if !reflect.DeepEqual(b, expected) {
@@ -90,7 +90,7 @@ func TestGetHTTPResponseFromCluster_NoMaster(t *testing.T) {
 	defer teardown()
 
 	testFunc := func(u url.URL) url.URL {
-		v, _ := url.Parse("http://not-existing.example.org/")
+		v, _ := url.Parse("https://not-existing.example.org/")
 		return *v
 	}
 	resp, err := client.GetHTTPResponseFromCluster(testFunc)

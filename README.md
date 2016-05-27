@@ -91,20 +91,21 @@ state, _ := mesos.GetStateFromLeader()
 
 framework, _ := mesos.GetFrameworkByPrefix(state.Frameworks, frameworkPrefix)
 task, _ := mesos.GetTaskByID(framework.CompletedTasks, taskID)
+
 slave, _ := mesos.GetSlaveByID(state.Slaves, task.SlaveID)
 
 pid, _ := mesos.ParsePidInformation(slave.PID)
 slaveState, _ := mesos.GetStateFromPid(pid)
 
-framework, _ = mesos.GetFrameworkByPrefix(slaveState.Frameworks, frameworkPrefix)
+framework, _ = mesos.GetFrameworkByPrefix(slaveState.CompletedFrameworks, frameworkPrefix)
 executor, _ := mesos.GetExecutorByID(framework.CompletedExecutors, taskID)
 
 stdOut, _ := mesos.GetStdOutOfTask(pid, executor.Directory)
 stdErr, _ := mesos.GetStdErrOfTask(pid, executor.Directory)
 
-fmt.Println(stdOut)
+fmt.Println(string(stdOut))
 fmt.Println("================")
-fmt.Println(stdErr)
+fmt.Println(string(stdErr))
 // Output:
 // Registered executor on 192.168.1.123
 // Starting task ct:1444578480000:0:example-chronos-task:

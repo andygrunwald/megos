@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"net/http"
 )
 
 // TODO Support new mesos version
@@ -20,6 +21,7 @@ type Client struct {
 	// Leader is the PID reference to the Leader of the Cluster (of Master URLs)
 	Leader *Pid
 	State  *State
+	Http *http.Client
 }
 
 // Pid is the process if per machine.
@@ -36,9 +38,13 @@ type Pid struct {
 // NewClient returns a new Megos / Mesos information client.
 // addresses has to be the the URL`s of the single nodes of the
 // Mesos cluster. It is recommended to apply all nodes in case of failures.
-func NewClient(addresses []*url.URL) *Client {
+func NewClient(addresses []*url.URL, httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = http.DefaultClient
+	}
 	client := &Client{
 		Master: addresses,
+		Http: httpClient,
 	}
 
 	return client

@@ -58,7 +58,7 @@ func setup() {
 	m3, _ := url.Parse(server3.URL)
 	master = []*url.URL{m1, m2, m3}
 
-	client = NewClient(master)
+	client = NewClient(master, nil)
 }
 
 // teardown closes the test HTTP server.

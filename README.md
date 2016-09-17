@@ -46,7 +46,7 @@ Further more a few examples how the API can be used and the code looks like.
 node1, _ := url.Parse("http://192.168.1.120:5050/")
 node2, _ := url.Parse("http://192.168.1.122:5050/")
 
-mesos := megos.NewClient([]*url.URL{node1, node2})
+mesos := megos.NewClient([]*url.URL{node1, node2}, nil)
 leader, err := mesos.DetermineLeader()
 if err != nil {
 	panic(err)
@@ -63,7 +63,7 @@ fmt.Println(leader)
 node1, _ := url.Parse("http://192.168.1.120:5050/")
 node2, _ := url.Parse("http://192.168.1.122:5050/")
 
-mesos := megos.NewClient([]*url.URL{node1, node2})
+mesos := megos.NewClient([]*url.URL{node1, node2}, nil)
 state, err := mesos.GetStateFromCluster()
 if err != nil {
 	panic(err)
@@ -81,7 +81,7 @@ Get stdout and stderr from a task of the [chronos](https://github.com/mesos/chro
 ```go
 node1, _ := url.Parse("http://192.168.1.120:5050/")
 node2, _ := url.Parse("http://192.168.1.122:5050/")
-mesos := megos.NewClient([]*url.URL{node1, node2})
+mesos := megos.NewClient([]*url.URL{node1, node2}, nil)
 
 frameworkPrefix := "chronos"
 taskID := "ct:1444578480000:0:example-chronos-task:"

@@ -2,11 +2,11 @@ package megos
 
 import (
 	"errors"
+	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"sync"
-	"net/http"
 )
 
 // TODO Support new mesos version
@@ -19,9 +19,11 @@ type Client struct {
 	// Master is the list of Mesos master nodes in the cluster.
 	Master []*url.URL
 	// Leader is the PID reference to the Leader of the Cluster (of Master URLs)
-	Leader *Pid
-	State  *State
-	Http *http.Client
+	Leader          *Pid
+	State           *State
+	System          *System
+	MetricsSnapshot *MetricsSnapshot
+	Http            *http.Client
 }
 
 // Pid is the process if per machine.
@@ -44,7 +46,7 @@ func NewClient(addresses []*url.URL, httpClient *http.Client) *Client {
 	}
 	client := &Client{
 		Master: addresses,
-		Http: httpClient,
+		Http:   httpClient,
 	}
 
 	return client

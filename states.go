@@ -89,8 +89,7 @@ func (c *Client) parseStateResponse(resp *http.Response, err error) (*State, err
 
 // GetURLForStateFile will return the URL for the state file of a node
 func (c *Client) GetURLForStateFile(instance url.URL) url.URL {
-	instance.Path = "master/state"
-	return instance
+	return AppendPath(instance, "master/state")
 }
 
 // GetURLForStateFilePid will return the URL for the state file of a node
@@ -101,8 +100,7 @@ func (c *Client) GetURLForStateFilePid(pid Pid) url.URL {
 
 // GetURLForStateSummaryFile will return the URL for the state-summary file of a node
 func (c *Client) GetURLForStateSummaryFile(instance url.URL) url.URL {
-	instance.Path = "master/state-summary"
-	return instance
+	return AppendPath(instance, "master/state-summary")
 }
 
 // GetURLForStateSummaryFilePid will return the URL for the state-summary file of a node
@@ -113,8 +111,7 @@ func (c *Client) GetURLForStateSummaryFilePid(pid Pid) url.URL {
 
 // GetURLForSlavesFile will return the URL for the slaves file of a node
 func (c *Client) GetURLForSlavesFile(instance url.URL) url.URL {
-	instance.Path = "master/slaves"
-	return instance
+	return AppendPath(instance, "master/slaves")
 }
 
 // GetURLForSlavesFilePid will return the URL for the slaves file of a node
@@ -133,4 +130,14 @@ func (c *Client) getURLForFilePid(pid Pid, filename string) url.URL {
 	}
 
 	return u
+}
+
+func AppendPath(instance url.URL, path string) (url.URL) {
+	if instance.Path != "" {
+		if instance.Path[len(instance.Path):] != "/" {
+			instance.Path = instance.Path + "/" 
+		}
+		instance.Path = instance.Path + path		
+	}
+	return instance
 }

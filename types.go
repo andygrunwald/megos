@@ -196,6 +196,30 @@ type Task struct {
 	State       string        `json:"state"`
 	Statuses    []TaskStatus  `json:"statuses"`
 	Discovery   TaskDiscovery `json:"discovery"`
+	Container   Container     `json:"container"`
+}
+
+// Container represents one way a Mesos task can be ran
+type Container struct {
+	Type   string `json:"type"`
+	Docker Docker `json:"docker,omitempty"`
+}
+
+// Docker is one type of Container
+type Docker struct {
+	Image          string        `json:"image"`
+	Netowrk        string        `json:"network"`
+	PortMappings   []PortMapping `json:"port_mappings"`
+	Priviledge     bool          `json:"priviledge"`
+	Parameters     []Parameter   `json:"parameters"`
+	ForcePullImage bool          `json:"force_pull_image"`
+}
+
+// PortMapping represents how containers ports map to host ports
+type PortMapping struct {
+	HostPort      int    `json:"host_port"`
+	ContainerPort int    `json:"container_port"`
+	Protocol      string `json:"protocol"`
 }
 
 // TaskDiscovery represents the dicovery information of a task

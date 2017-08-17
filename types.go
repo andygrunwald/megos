@@ -208,7 +208,7 @@ type Container struct {
 // Docker is one type of Container
 type Docker struct {
 	Image          string        `json:"image"`
-	Netowrk        string        `json:"network"`
+	Network        string        `json:"network"`
 	PortMappings   []PortMapping `json:"port_mappings"`
 	Priviledge     bool          `json:"priviledge"`
 	Parameters     []Parameter   `json:"parameters"`

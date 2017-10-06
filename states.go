@@ -132,12 +132,12 @@ func (c *Client) getURLForFilePid(pid Pid, filename string) url.URL {
 	return u
 }
 
-func AppendPath(instance url.URL, path string) (url.URL) {
+func AppendPath(instance url.URL, path string) url.URL {
 	if instance.Path != "" {
 		if instance.Path[len(instance.Path):] != "/" {
-			instance.Path = instance.Path + "/" 
+			instance.Path = instance.Path + "/"
 		}
-		instance.Path = instance.Path + path		
 	}
+	instance.Path = instance.Path + path
 	return instance
 }

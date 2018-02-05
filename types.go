@@ -281,7 +281,7 @@ type Slave struct {
 	Resources           Resources              `json:"resources"`
 	UsedResources       Resources              `json:"used_resources"`
 	OfferedResources    Resources              `json:"offered_resources"`
-	ReservedResources   Resources              `json:"reserved_resources"`
+	ReservedResources   map[string]Resources              `json:"reserved_resources"`
 	UnreservedResources Resources              `json:"unreserved_resources"`
 	Attributes          map[string]interface{} `json:"attributes"`
 	Version             string                 `json:"version"`

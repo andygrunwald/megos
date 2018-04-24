@@ -12,6 +12,11 @@ import (
 // TODO Support new mesos version
 // @link http://mesos.apache.org/documentation/latest/upgrades/
 
+// HTTPClient allows the client to be changed to any valid client.
+type HTTPClient interface {
+	Get(url string) (res *http.Response, err error)
+}
+
 // Client manages the communication with the Mesos cluster.
 type Client struct {
 	sync.Mutex
@@ -23,7 +28,7 @@ type Client struct {
 	State           *State
 	System          *System
 	MetricsSnapshot *MetricsSnapshot
-	Http            *http.Client
+	HTTP            HTTPClient
 }
 
 // Pid is the process if per machine.
@@ -40,13 +45,13 @@ type Pid struct {
 // NewClient returns a new Megos / Mesos information client.
 // addresses has to be the the URL`s of the single nodes of the
 // Mesos cluster. It is recommended to apply all nodes in case of failures.
-func NewClient(addresses []*url.URL, httpClient *http.Client) *Client {
+func NewClient(addresses []*url.URL, httpClient HTTPClient) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
 	client := &Client{
 		Master: addresses,
-		Http:   httpClient,
+		HTTP:   httpClient,
 	}
 
 	return client

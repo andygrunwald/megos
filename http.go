@@ -36,7 +36,7 @@ func (c *Client) GetHTTPResponseFromLeader(f func(Pid) url.URL) (*http.Response,
 
 // GetHTTPResponse will return a http.Response from a URL
 func (c *Client) GetHTTPResponse(u *url.URL) (*http.Response, error) {
-	resp, err := c.Http.Get(u.String())
+	resp, err := c.HTTP.Get(u.String())
 
 	if err != nil {
 		return nil, err
